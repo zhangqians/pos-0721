@@ -35,14 +35,8 @@ function countBarcodes(formattedTags) {
 
 function buildCartItems(countedBarcodes, allItems) {
   return countedBarcodes.map(({barcode, count}) => {
-    let item = _getExistentElementByBarcode(allItems, barcode);
-    return {
-      barcode,
-      name: item.name,
-      unit: item.unit,
-      price: item.price,
-      count
-    }
+    let {name, unit, price} = _getExistentElementByBarcode(allItems, barcode);
+    return {barcode, name, unit, price, count}
   })
 }
 
@@ -71,7 +65,7 @@ function calculateTotalPrices(promotedItems) {
   }, {totalPayPrice: 0, totalSaved: 0})
 }
 
-function buildReceipt(promotedItems, totalPrices) {
+function buildReceipt(promotedItems, {totalPayPrice, totalSaved}) {
   let savedItems = promotedItems.filter((promotedItem) => promotedItem.saved > 0)
     .map(({name, count, unit}) => {
       return {name, count, unit}
@@ -81,8 +75,7 @@ function buildReceipt(promotedItems, totalPrices) {
       return {name, unit, price, count, payPrice, saved}
     }),
     savedItems,
-    totalPayPrice: totalPrices.totalPayPrice,
-    totalSaved: totalPrices.totalSaved
+    totalPayPrice, totalSaved
   }
 
 }
