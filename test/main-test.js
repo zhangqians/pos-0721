@@ -2,6 +2,25 @@
 
 describe('pos', () => {
 
+  it('should format the tags', ()=> {
+    let tags = [
+      'ITEM0001',
+      'ITEM0002-3'
+    ];
+    let formattedTags = formatTags(tags);
+    let expected = [
+      {
+        barcode: 'ITEM0001',
+        count: 1
+      },
+      {
+        barcode: 'ITEM0002',
+        count: 3
+      }
+    ];
+    expect(formattedTags).toEqual(expected);
+  });
+
   it('should print text for items has promoted', () => {
 
     const tags = [
@@ -27,7 +46,7 @@ describe('pos', () => {
     expect(console.log).toHaveBeenCalledWith(expectText);
   });
 
- it('should print text for items with no one has promoted', () => {
+  it('should print text for items with no one has promoted', () => {
 
     const tags = [
       // 根据输出自行推断出合格的输入

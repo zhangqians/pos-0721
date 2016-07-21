@@ -1,3 +1,26 @@
 'use strict';
 
-//TODO: 请在该文件中实现练习要求并删除此注释
+//
+// countBarcodes
+// buildCartItems
+// buildPromotedItems
+// calculateTotalPrices
+// buildReceipt
+// printReceiptString
+
+function formatTags(tags) {
+  return tags.map((tag) => {
+    if (tag.includes('-')) {
+      let [barcode, count] = tag.split('-');
+      return {
+        barcode,
+        count: parseFloat(count)
+      }
+    } else {
+      return {
+        barcode: tag,
+        count: 1
+      }
+    }
+  })
+}
