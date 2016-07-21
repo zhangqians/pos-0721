@@ -82,22 +82,21 @@ function buildReceipt(promotedItems, {totalPayPrice, totalSaved}) {
 
 function buildReceiptString(receipt) {
   let lines = ['***<没钱赚商店>购物清单***'];
-  receipt.promotedItems.forEach(({name, count, unit, price, payPrice, saved})=> {
+  for (let {name, count, unit, price, payPrice, saved} of receipt.promotedItems) {
     let line = `名称：${name}，数量：${count}${unit}，单价：${price.toFixed(2)}(元)，小计：${payPrice.toFixed(2)}(元)`;
     if (saved > 0) {
       line += `，优惠：${saved.toFixed(2)}(元)`
     }
     lines.push(line)
-  });
-
+  }
 
   let hasSaved = receipt.savedItems.length > 0;
   if (hasSaved) {
     lines.push('----------------------');
     lines.push('批发价出售商品：');
-    receipt.savedItems.forEach(({name, count, unit}) => {
+    for (let {name, count, unit} of receipt.savedItems) {
       lines.push(`名称：${name}，数量：${count}${unit}`);
-    });
+    }
   }
 
   lines.push('----------------------');
