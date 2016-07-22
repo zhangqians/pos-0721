@@ -40,19 +40,19 @@ function buildCartItems(countedBarcodes, allItems) {
   })
 }
 
-function _fixFloat(number) {
+function _fixPrice(number) {
   return parseFloat(number.toFixed(2))
 }
 
 function buildPromotedItems(cartItems, promotions) {
-  let promotion = promotions.find((promotion)=> promotion.type === '单品批发价出售');
+  let currentPromotion = promotions.find((promotion)=> promotion.type === '单品批发价出售');
   return cartItems.map((cartItem)=> {
-    let hasPromoted = promotion.barcodes.includes(cartItem.barcode) && cartItem.count > 10;
+    let hasPromoted = currentPromotion.barcodes.includes(cartItem.barcode) && cartItem.count > 10;
     let totalPrice = cartItem.price * cartItem.count;
     let saved = hasPromoted ? totalPrice * 0.05 : 0;
     let payPrice = totalPrice - saved;
     return Object.assign({}, cartItem, {
-      payPrice, saved: _fixFloat(saved)
+      payPrice, saved: _fixPrice(saved)
     })
   })
 }
